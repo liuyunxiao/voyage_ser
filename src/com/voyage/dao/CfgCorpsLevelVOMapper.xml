@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgCorpsLevelVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgCorpsLevelVO" >
+    <id column="ccl_id" property="cclId" jdbcType="INTEGER" />
+    <result column="ccl_per_cost" property="cclPerCost" jdbcType="INTEGER" />
+    <result column="ccl_total_cost" property="cclTotalCost" jdbcType="INTEGER" />
+  </resultMap>
+ <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_corps_level order by ccl_id
+	</select>
+</mapper>

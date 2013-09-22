@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserVOMapper" >
+  <resultMap id="FullResultMap" type="com.voyage.data.vo.SysUserVO" >
+    <id column="su_id" property="suId" jdbcType="INTEGER" />
+    <result column="su_account_id" property="suAccountVO.saId" jdbcType="INTEGER" />
+     <result column="su_id_alias" property="suIdAlias" jdbcType="VARCHAR" />
+    <result column="su_name" property="suName" jdbcType="VARCHAR" />
+    <result column="su_sex" property="suSex" jdbcType="INTEGER" />
+    <result column="su_img" property="suImg" jdbcType="VARCHAR" />
+    <result column="su_level" property="suLevel" jdbcType="INTEGER" />
+    <result column="su_vip_level" property="suVipLevel" jdbcType="INTEGER" />
+   <result column="su_remark" property="suRemark" />
+    <result column="su_create" property="suCreate" jdbcType="TIMESTAMP" />
+    <result column="su_login" property="suLogin" jdbcType="TIMESTAMP" />
+    <result column="su_logout" property="suLogout" jdbcType="TIMESTAMP" />
+    <result column="su_protect" property="suProtect" jdbcType="TIMESTAMP" />
+     <result column="su_contact" property="suContact" jdbcType="VARCHAR" />
+     <result column="su_captain" property="suCaptain" jdbcType="VARCHAR" />
+     <result column="su_exp" property="suExp" jdbcType="INTEGER" />
+     <result column="su_vip_exp" property="suVipExp" jdbcType="INTEGER" />
+      <result column="su_login_days" property="suLoginDays" jdbcType="INTEGER" />
+       <result column="su_army" property="suArmy" jdbcType="VARCHAR" />
+       <result column="su_newer" property="suNewer" jdbcType="INTEGER" />
+         <result column="su_daily" property="suDaily" jdbcType="VARCHAR" />
+         <result column="su_first_charge" property="suFirstCharge" jdbcType="INTEGER" />
+    <association property="suGoldVO" column="su_gold_id" javaType="SysUserGoldVO" resultMap="com.voyage.dao.SysUserGoldVOMapper.BaseResultMap" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserVO" >
+    <id column="su_id" property="suId" jdbcType="INTEGER" />
+    <result column="su_account_id" property="suAccountVO.saId" jdbcType="INTEGER" />
+    <result column="su_id_alias" property="suIdAlias" jdbcType="VARCHAR" />
+    <result column="su_name" property="suName" jdbcType="VARCHAR" />
+    <result column="su_sex" property="suSex" jdbcType="INTEGER" />
+    <result column="su_img" property="suImg" jdbcType="VARCHAR" />
+    <result column="su_level" property="suLevel" jdbcType="INTEGER" />
+    <result column="su_vip_level" property="suVipLevel" jdbcType="INTEGER" />
+    <result column="su_remark" property="suRemark" />
+    <result column="su_create" property="suCreate" jdbcType="TIMESTAMP" />
+    <result column="su_login" property="suLogin" jdbcType="TIMESTAMP" />
+    <result column="su_logout" property="suLogout" jdbcType="TIMESTAMP" />
+    <result column="su_protect" property="suProtect" jdbcType="TIMESTAMP" />
+    <result column="su_contact" property="suContact" jdbcType="VARCHAR" />
+    <result column="su_gold_id" property="suGoldVO.sugId" jdbcType="INTEGER" />
+    <result column="su_captain" property="suCaptain" jdbcType="VARCHAR" />
+     <result column="su_exp" property="suExp" jdbcType="INTEGER" />
+     <result column="su_vip_exp" property="suVipExp" jdbcType="INTEGER" />
+      <result column="su_login_days" property="suLoginDays" jdbcType="INTEGER" />
+          <result column="su_army" property="suArmy" jdbcType="VARCHAR" />
+          <result column="su_newer" property="suNewer" jdbcType="INTEGER" />
+            <result column="su_daily" property="suDaily" jdbcType="VARCHAR" />
+            <result column="su_first_charge" property="suFirstCharge" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <sql id="selectFull">
+		select su.*,sug.*
+		from sys_user as su 
+		join sys_user_gold as sug on su.su_gold_id=sug.sug_id 
+	</sql>
+ <select id="selectAllUserIds" resultType="int" >
+    select su_id from sys_user
+  </select>
+   <select id="selectAllCount" resultType="java.lang.Integer" >
+    select count(1) from sys_user
+  </select>
+<select id="selectLeftOfflineLive" resultMap="FullResultMap" parameterType="java.lang.Integer" >
+    <include refid="selectFull" />
+    where (sug.sug_storage+sug.sug_up_corps_prop+sug.sug_battle_corps) &lt;= #{gGold}
+    and su.su_logout &gt; su.su_login and SYSDATE()&gt; su_protect and DATE_SUB(SYSDATE(),INTERVAL #{gHour} hour) &lt; su_login
+     limit 0,#{gN}
+  </select>
+  <select id="selectRightOfflineLive" resultMap="FullResultMap" parameterType="java.lang.Integer" >
+    <include refid="selectFull" />
+    where (sug.sug_storage+sug.sug_up_corps_prop+sug.sug_battle_corps) &gt;= #{gGold}
+    and su.su_logout &gt; su.su_login and SYSDATE()&gt; su_protect and DATE_SUB(SYSDATE(),INTERVAL #{gHour} hour) &lt; su_login
+     limit 0,#{gN}
+  </select>
+  <select id="selectFullByPk" resultMap="FullResultMap" parameterType="java.lang.Integer" >
+    <include refid="selectFull" />
+    where su.su_id = #{suId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPk" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   select * from sys_user  where su_id = #{suId,jdbcType=INTEGER}
+  </select>
+   <select id="selectCountByName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+   select count(1) from sys_user  where su_name=#{suName}
+  </select>
+  <select id="selectByAccountId" parameterType="Integer" resultMap="FullResultMap">
+		 <include refid="selectFull" />
+		  where su.su_account_id=#{accountId}
+	</select>
+	  <select id="selectFullAll"  resultMap="FullResultMap">
+		 <include refid="selectFull" />
+	</select>
+	  <select id="selectFullByUserIds"  resultMap="FullResultMap">
+		 <include refid="selectFull" />
+		 where su.su_id in (${userIds})
+	</select>
+	
+	  <select id="selectFullByIdAlias"  resultMap="FullResultMap" parameterType="map">
+		 <include refid="selectFull" />
+		 where su_id_alias=#{idAlias}
+	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user
+    where su_id = #{suId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserVO" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="suId != null" >
+        su_id,
+      </if>
+      <if test="suIdAlias != null" >
+        su_id_alias,
+      </if>
+       <if test="suContact != null" >
+        su_contact,
+      </if>
+      <if test="suAccountVO != null" >
+        su_account_id,
+      </if>
+      <if test="suName != null" >
+        su_name,
+      </if>
+      <if test="suSex != null" >
+        su_sex,
+      </if>
+      <if test="suImg != null" >
+        su_img,
+      </if>
+      <if test="suLevel != null" >
+        su_level,
+      </if>
+      <if test="suVipLevel != null" >
+        su_vip_level,
+      </if>
+      
+       <if test="suGoldVO != null">
+        su_gold_id,
+      </if>
+         <if test="suRemark != null">
+        su_remark,
+      </if>
+      <if test="suCreate != null" >
+        su_create,
+      </if>
+       <if test="suLogin != null" >
+        su_login,
+      </if>
+      <if test="suLogout != null" >
+        su_logout,
+      </if>
+      <if test="suProtect != null" >
+        su_protect,
+      </if>
+        <if test="suCaptain != null" >
+        su_captain,
+      </if>
+       <if test="suExp != null" >
+        su_exp,
+      </if>
+       <if test="suVipExp != null" >
+        su_vip_exp,
+      </if>
+        <if test="suLoginDays != null" >
+        su_login_days,
+      </if>
+         <if test="suArmy != null" >
+        su_army,
+      </if>
+        <if test="suNewer != null" >
+        su_newer,
+      </if>
+        <if test="suDaily != null" >
+        su_daily,
+      </if>
+        <if test="suFirstCharge != null" >
+        su_first_charge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="suId != null" >
+        #{suId,jdbcType=INTEGER},
+      </if>
+       <if test="suIdAlias != null" >
+        #{suIdAlias},
+      </if>
+       <if test="suContact != null" >
+        #{suContact},
+      </if>
+      <if test="suAccountVO != null" >
+        #{suAccountVO.saId,jdbcType=INTEGER},
+      </if>
+      <if test="suName != null" >
+        #{suName,jdbcType=VARCHAR},
+      </if>
+      <if test="suSex != null" >
+        #{suSex,jdbcType=INTEGER},
+      </if>
+      <if test="suImg != null" >
+        #{suImg,jdbcType=VARCHAR},
+      </if>
+      <if test="suLevel != null" >
+        #{suLevel,jdbcType=INTEGER},
+      </if>
+      <if test="suVipLevel != null" >
+        #{suVipLevel,jdbcType=INTEGER},
+      </if>
+      
+      <if test="suGoldVO != null">
+        #{suGoldVO.sugId,jdbcType=INTEGER},
+      </if>
+       <if test="suRemark != null">
+        #{suRemark,jdbcType=INTEGER},
+      </if>
+        <if test="suCreate != null" >
+        #{suCreate,jdbcType=TIMESTAMP},
+      </if>
+        <if test="suLogin != null" >
+        #{suLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suLogout != null" >
+        #{suLogout,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suProtect != null" >
+        #{suProtect,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suCaptain != null" >
+        #{suCaptain},
+      </if>
+       <if test="suExp != null" >
+       #{suExp},
+      </if>
+       <if test="suVipExp != null" >
+        #{suVipExp},
+      </if>
+       <if test="suLoginDays != null" >
+        #{suLoginDays},
+      </if>
+       <if test="suArmy != null" >
+        #{suArmy},
+      </if>
+       <if test="suNewer != null" >
+        #{suNewer},
+      </if>
+        <if test="suDaily != null" >
+        #{suDaily},
+      </if>
+        <if test="suFirstCharge != null" >
+        #{suFirstCharge},
+      </if>
+    </trim>
+    <selectKey resultType="int" keyProperty="suId">
+        SELECT LAST_INSERT_ID()
+	</selectKey>
+  </insert>
+   <update id="resetAllDaily" >
+    update sys_user set su_daily=0
+   </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserVO" >
+    update sys_user
+    <set >
+     <if test="suIdAlias != null" >
+        su_id_alias=#{suIdAlias},
+      </if>
+       <if test="suContact != null" >
+        su_contact=#{suContact},
+      </if>
+      <if test="suAccountVO != null" >
+        su_account_id = #{suAccountVO.saId,jdbcType=INTEGER},
+      </if>
+      <if test="suName != null" >
+        su_name = #{suName,jdbcType=VARCHAR},
+      </if>
+      <if test="suSex != null" >
+        su_sex = #{suSex,jdbcType=INTEGER},
+      </if>
+      <if test="suImg != null" >
+        su_img = #{suImg,jdbcType=VARCHAR},
+      </if>
+      <if test="suLevel != null" >
+        su_level = #{suLevel,jdbcType=INTEGER},
+      </if>
+      <if test="suVipLevel != null" >
+        su_vip_level = #{suVipLevel,jdbcType=INTEGER},
+      </if>
+      
+       <if test="suGoldVO != null">
+        su_gold_id = #{suGoldVO.sugId,jdbcType=INTEGER},
+      </if>
+      <if test="suRemark != null">
+        su_remark = #{suRemark,jdbcType=INTEGER},
+      </if>
+       <if test="suCreate != null" >
+       su_create= #{suCreate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="suLogin != null" >
+        su_login = #{suLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suLogout != null" >
+        su_logout = #{suLogout,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suProtect != null" >
+        su_protect = #{suProtect,jdbcType=TIMESTAMP},
+      </if>
+        <if test="suCaptain != null" >
+        su_captain=#{suCaptain},
+      </if>
+       <if test="suExp != null" >
+        su_exp=#{suExp},
+      </if>
+       <if test="suVipExp != null" >
+        su_vip_exp=#{suVipExp},
+      </if>
+        <if test="suLoginDays != null" >
+       su_login_days= #{suLoginDays},
+      </if>
+       <if test="suArmy != null" >
+        su_army=#{suArmy},
+      </if>
+       <if test="suNewer != null" >
+        su_newer=#{suNewer},
+      </if>
+       <if test="suDaily != null" >
+        su_daily=#{suDaily},
+      </if>
+        <if test="suFirstCharge != null" >
+        su_first_charge=#{suFirstCharge},
+      </if>
+    </set>
+    where su_id = #{suId,jdbcType=INTEGER}
+  </update>
+ <select id="selectActiveFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+  exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id) and (su.su_logout &lt; su.su_login  or DATE_SUB(SYSDATE(),INTERVAL #{nHour} hour) &lt; su.su_login)
+   limit 0,#{nActive}
+  </select>
+   <select id="selectActiveNotFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+ not exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id)and su.su_id!=#{userId} and (su.su_logout &lt; su.su_login  or DATE_SUB(SYSDATE(),INTERVAL #{nHour} hour) &lt; su.su_login)
+   limit 0,#{nActive}
+  </select>
+  <select id="selectOnlineFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+  exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id) and su.su_logout &lt; su.su_login
+   limit 0,#{nActive}
+  </select>
+  <select id="selectOnlineNotFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+ not exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id)and su.su_id!=#{userId} and su.su_logout &lt; su.su_login
+   limit 0,#{nActive}
+  </select>
+  <select id="selectNotFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+ not exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id)and su.su_id!=#{userId} 
+   limit 0,#{nActive}
+  </select>
+   <select id="selectFriend" resultMap="FullResultMap" parameterType="map" >
+   <include refid="selectFull" />
+  where 
+  exists (select 1 from sys_user_relation sur where sur.sur_user_id=#{userId} and sur.sur_oppo_id=su.su_id) order by su.su_id asc
+  limit #{pStart},#{pLimit}
+  </select>
+</mapper>

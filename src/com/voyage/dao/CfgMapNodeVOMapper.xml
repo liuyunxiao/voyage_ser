@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgMapNodeVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgMapNodeVO" >
+    <id column="cmn_id" property="cmnId" jdbcType="INTEGER" />
+    <result column="cmn_type" property="cmnType" jdbcType="INTEGER" />
+    <result column="cmn_level" property="cmnLevel" jdbcType="INTEGER" />
+    <result column="cmn_img" property="cmnImg" jdbcType="VARCHAR" />
+    <result column="cmn_name" property="cmnName" jdbcType="VARCHAR" />
+    <result column="cmn_next_id" property="cmnNextId" jdbcType="INTEGER" />
+    <result column="cmn_monster_id" property="cmnMonsterId" jdbcType="INTEGER" />
+    <result column="cmn_reward" property="cmnReward" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_map_node order by cmn_id
+	</select>
+</mapper>

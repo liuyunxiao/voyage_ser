@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgTaskVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgTaskVO" >
+    <id column="ct_id" property="ctId" jdbcType="INTEGER" />
+    <result column="ct_head" property="ctHead" jdbcType="INTEGER" />
+    <result column="ct_next_id" property="ctNextId" jdbcType="INTEGER" />
+    <result column="ct_type" property="ctType" jdbcType="INTEGER" />
+    <result column="ct_name" property="ctName" jdbcType="VARCHAR" />
+    <result column="ct_img" property="ctImg" jdbcType="VARCHAR" />
+    <result column="ct_desc" property="ctDesc" jdbcType="VARCHAR" />
+    <result column="ct_reward_id" property="ctRewardId" jdbcType="INTEGER" />
+      <result column="ct_restrain" property="ctRestrain" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_task
+	</select>
+</mapper>

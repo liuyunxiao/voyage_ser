@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgTimeZoneGiveVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgTimeZoneGiveVO" >
+    <id column="ctzg_id" property="ctzgId" jdbcType="INTEGER" />
+    <result column="ctzg_left" property="ctzgLeft" jdbcType="INTEGER" />
+    <result column="ctzg_right" property="ctzgRight" jdbcType="INTEGER" />
+    <result column="ctzg_min" property="ctzgMin" jdbcType="INTEGER" />
+    <result column="ctzg_max" property="ctzgMax" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <select id="selectAll" resultMap="BaseResultMap"  >
+  	 select *    from cfg_time_zone_give
+  </select>
+ 
+</mapper>

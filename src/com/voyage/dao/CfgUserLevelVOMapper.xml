@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgUserLevelVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgUserLevelVO" >
+    <id column="cul_id" property="culId" jdbcType="INTEGER" />
+    <result column="cul_per_cost" property="culPerCost" jdbcType="INTEGER" />
+    <result column="cul_total_cost" property="culTotalCost" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_user_level order by cul_id
+	</select>
+</mapper>

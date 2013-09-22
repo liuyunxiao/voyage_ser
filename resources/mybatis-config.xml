@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties />
+	
+	<settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+	
+	<!-- <typeAliases /> -->
+		
+	<!-- <environments /> -->
+	
+	<!-- *Mapper.java与*Mapper.xml同名且在同一目录下(com.voyage.dao)时无需配置<mappers /> -->
+	<!-- <mappers /> -->
+</configuration>

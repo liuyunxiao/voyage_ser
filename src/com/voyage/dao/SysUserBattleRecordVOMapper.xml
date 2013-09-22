@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserBattleRecordVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserBattleRecordVO" >
+    <id column="subr_id" property="subrId" jdbcType="INTEGER" />
+    <result column="subr_type" property="subrType" jdbcType="INTEGER" />
+    <result column="subr_replay_id" property="subrReplayId" jdbcType="VARCHAR" />
+    <result column="subr_time" property="subrTime" jdbcType="TIMESTAMP" />
+    <result column="subr_user_id" property="subrUserVO.suId" jdbcType="INTEGER" />
+    <result column="subr_oppo_id" property="subrOppoId" jdbcType="INTEGER" />
+    <result column="subr_winside" property="subrWinside" jdbcType="INTEGER" />
+    <result column="subr_oppo_gold" property="subrOppoGold" jdbcType="INTEGER" />
+     <result column="subr_state" property="subrState" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="FullResultMap" type="com.voyage.data.vo.SysUserBattleRecordVO" >
+    <id column="subr_id" property="subrId" jdbcType="INTEGER" />
+    <result column="subr_type" property="subrType" jdbcType="INTEGER" />
+    <result column="subr_replay_id" property="subrReplayId" jdbcType="VARCHAR" />
+    <result column="subr_time" property="subrTime" jdbcType="TIMESTAMP" />
+    <result column="subr_oppo_id" property="subrOppoId" jdbcType="INTEGER" />
+    <result column="subr_winside" property="subrWinside" jdbcType="INTEGER" />
+    <result column="subr_oppo_gold" property="subrOppoGold" jdbcType="INTEGER" />
+      <result column="subr_state" property="subrState" jdbcType="INTEGER" />
+    <association property="subrUserVO" column="subr_user_id" javaType="SysUserVO" resultMap="com.voyage.dao.SysUserVOMapper.BaseResultMap" />
+  </resultMap>
+  <sql id="selectFull">
+		select subr.*,su.*
+		from sys_user_battle_record as subr 
+		join sys_user as su on subr.subr_user_id=su.su_id 
+</sql>
+  <sql id="selectBase" >
+    subr_id, subr_type, subr_replay_id, subr_time, subr_user_id, subr_oppo_id, 
+    subr_winside, subr_oppo_gold,subr_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="selectBase" />
+    from sys_user_battle_record
+    where subr_id = #{subrId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_battle_record
+    where subr_id = #{subrId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserBattleRecordVO" >
+    insert into sys_user_battle_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subrId != null" >
+        subr_id,
+      </if>
+      <if test="subrType != null" >
+        subr_type,
+      </if>
+      <if test="subrReplayId != null" >
+        subr_replay_id,
+      </if>
+      <if test="subrTime != null" >
+        subr_time,
+      </if>
+      <if test="subrUserVO != null" >
+        subr_user_id,
+      </if>
+      <if test="subrOppoId != null" >
+        subr_oppo_id,
+      </if>
+      
+      <if test="subrWinside != null" >
+        subr_winside,
+      </if>
+      <if test="subrOppoGold != null" >
+        subr_oppo_gold,
+      </if>
+        <if test="subrState != null" >
+        subr_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subrId != null" >
+        #{subrId,jdbcType=INTEGER},
+      </if>
+      <if test="subrType != null" >
+        #{subrType,jdbcType=INTEGER},
+      </if>
+      <if test="subrReplayId != null" >
+        #{subrReplayId,jdbcType=VARCHAR},
+      </if>
+      <if test="subrTime != null" >
+        #{subrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subrUserVO != null" >
+        #{subrUserVO.suId,jdbcType=INTEGER},
+      </if>
+      <if test="subrOppoId != null" >
+        #{subrOppoId,jdbcType=INTEGER},
+      </if>
+    
+      <if test="subrWinside != null" >
+        #{subrWinside,jdbcType=INTEGER},
+      </if>
+      <if test="subrOppoGold != null" >
+        #{subrOppoGold,jdbcType=INTEGER},
+      </if>
+       <if test="subrState != null" >
+       #{subrState},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserBattleRecordVO" >
+    update sys_user_battle_record
+    <set >
+      <if test="subrType != null" >
+        subr_type = #{subrType,jdbcType=INTEGER},
+      </if>
+      <if test="subrReplayId != null" >
+        subr_replay_id = #{subrReplayId,jdbcType=VARCHAR},
+      </if>
+      <if test="subrTime != null" >
+        subr_time = #{subrTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subrUserVO != null" >
+        subr_user_id = #{subrUserVO.suId,jdbcType=INTEGER},
+      </if>
+      <if test="subrOppoId != null" >
+        subr_oppo_id = #{subrOppoId,jdbcType=INTEGER},
+      </if>
+     
+      <if test="subrWinside != null" >
+        subr_winside = #{subrWinside,jdbcType=INTEGER},
+      </if>
+      <if test="subrOppoGold != null" >
+        subr_oppo_gold = #{subrOppoGold,jdbcType=INTEGER},
+      </if>
+       <if test="subrState != null" >
+        subr_state=#{subrState},
+      </if>
+    </set>
+    where subr_id = #{subrId,jdbcType=INTEGER}
+  </update>
+    <select id="selectLimitId" parameterType="map" resultType="int">
+		select subr_id from sys_user_battle_record where subr_oppo_id=#{oppoId} and subr_type=#{subrType} order by subr_id desc limit #{maxRecord},1
+	</select>
+	<select id="selectOutDateRecords" parameterType="map"  resultMap="BaseResultMap">
+		select
+		  <include refid="selectBase" />
+		 from sys_user_battle_record where subr_oppo_id=#{oppoId} and subr_type=#{subrType} and subr_id &lt;= #{limitId}
+	</select>
+	<delete id="deleteByLimitId" parameterType="map" >
+			delete from sys_user_battle_record where subr_oppo_id=#{oppoId} and subr_type=#{subrType} and subr_id &lt;= #{limitId}
+	</delete>
+	 <select id="selectBattleRecords" parameterType="map"  resultMap="FullResultMap">
+		 <include refid="selectFull" />
+		  where subr.subr_oppo_id=#{oppoId}  order by subr.subr_id desc limit 0,#{maxRecord}
+	</select>
+	 <select id="selectUnreadCount" parameterType="map"  resultType="java.lang.Integer">
+		  select count(1) from sys_user_battle_record
+		  where subr_oppo_id=#{oppoId} and subr_state=#{subrState}
+	</select>
+	<update id="updateAllRead" parameterType="map" >
+    update sys_user_battle_record
+    set subr_state=#{subrState}
+    where subr_oppo_id=#{oppoId}
+  </update>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgBuffVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgBuffVO" >
+    <id column="cb_id" property="cbId" jdbcType="INTEGER" />
+    <result column="cb_name" property="cbName" jdbcType="VARCHAR" />
+    <result column="cb_type" property="cbType" jdbcType="INTEGER" />
+    <result column="cb_desc" property="cbDesc" jdbcType="VARCHAR" />
+    <result column="cb_battle_img" property="cbBattleImg" jdbcType="VARCHAR" />
+    <result column="cb_calc_type" property="cbCalcType" jdbcType="INTEGER" />
+    <result column="cb_continues" property="cbContinues" jdbcType="INTEGER" />
+    <result column="cb_inc_atk" property="cbIncAtk" jdbcType="DOUBLE" />
+    <result column="cb_inc_def" property="cbIncDef" jdbcType="DOUBLE" />
+    <result column="cb_inc_dam" property="cbIncDam" jdbcType="DOUBLE" />
+    <result column="cb_dec_atk" property="cbDecAtk" jdbcType="DOUBLE" />
+    <result column="cb_dec_def" property="cbDecDef" jdbcType="DOUBLE" />
+    <result column="cb_dec_dam" property="cbDecDam" jdbcType="DOUBLE" />
+    <result column="cb_anti_dam" property="cbAntiDam" jdbcType="DOUBLE" />
+    <result column="cb_inc_hp" property="cbIncHp" jdbcType="DOUBLE" />
+    <result column="cb_dizzy" property="cbDizzy" jdbcType="INTEGER" />
+    <result column="cb_keep" property="cbKeep" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_buff
+	</select>
+</mapper>

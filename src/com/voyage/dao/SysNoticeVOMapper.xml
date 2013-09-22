@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysNoticeVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysNoticeVO" >
+    <id column="sn_id" property="snId" jdbcType="INTEGER" />
+    <result column="sn_type" property="snType" jdbcType="INTEGER" />
+    <result column="sn_name" property="snName" jdbcType="VARCHAR" />
+    <result column="sn_start" property="snStart" jdbcType="TIMESTAMP" />
+    <result column="sn_end" property="snEnd" jdbcType="TIMESTAMP" />
+    <result column="sn_content" property="snContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sn_id, sn_type, sn_name, sn_start, sn_end, sn_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_notice
+    where sn_id = #{snId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectValid" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_notice
+    where current_timestamp() between sn_start and sn_end
+  </select>
+    <delete id="deleteInvalid" >
+    delete from sys_notice
+    where sn_end &lt; current_timestamp()
+  </delete>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_notice
+    where sn_id = #{snId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysNoticeVO" >
+    insert into sys_notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="snId != null" >
+        sn_id,
+      </if>
+      <if test="snType != null" >
+        sn_type,
+      </if>
+      <if test="snName != null" >
+        sn_name,
+      </if>
+      <if test="snStart != null" >
+        sn_start,
+      </if>
+      <if test="snEnd != null" >
+        sn_end,
+      </if>
+      <if test="snContent != null" >
+        sn_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="snId != null" >
+        #{snId,jdbcType=INTEGER},
+      </if>
+      <if test="snType != null" >
+        #{snType,jdbcType=INTEGER},
+      </if>
+      <if test="snName != null" >
+        #{snName,jdbcType=VARCHAR},
+      </if>
+      <if test="snStart != null" >
+        #{snStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snEnd != null" >
+        #{snEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snContent != null" >
+        #{snContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysNoticeVO" >
+    update sys_notice
+    <set >
+      <if test="snType != null" >
+        sn_type = #{snType,jdbcType=INTEGER},
+      </if>
+      <if test="snName != null" >
+        sn_name = #{snName,jdbcType=VARCHAR},
+      </if>
+      <if test="snStart != null" >
+        sn_start = #{snStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snEnd != null" >
+        sn_end = #{snEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snContent != null" >
+        sn_content = #{snContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sn_id = #{snId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

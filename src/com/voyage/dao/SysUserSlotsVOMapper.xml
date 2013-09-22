@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserSlotsVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserSlotsVO" >
+    <id column="sus_id" property="susId" jdbcType="INTEGER" />
+    <result column="sus_user_id" property="susUserId" jdbcType="INTEGER" />
+    <result column="sus_score" property="susScore" jdbcType="INTEGER" />
+    <result column="sus_total_score" property="susTotalScore" jdbcType="INTEGER" />
+    <result column="sus_total_invest" property="susTotalInvest" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sus_id, sus_user_id, sus_score, sus_total_score, sus_total_invest
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_slots
+    where sus_id = #{susId,jdbcType=INTEGER}
+  </select>
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_slots
+    where sus_user_id=#{userId}
+  </select>
+   <select id="selectAllByScoreDesc" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_slots
+    order by sus_score desc limit 0,#{nRecord}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_slots
+    where sus_id = #{susId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserSlotsVO" >
+    insert into sys_user_slots
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="susId != null" >
+        sus_id,
+      </if>
+      <if test="susUserId != null" >
+        sus_user_id,
+      </if>
+      <if test="susScore != null" >
+        sus_score,
+      </if>
+      <if test="susTotalScore != null" >
+        sus_total_score,
+      </if>
+      <if test="susTotalInvest != null" >
+        sus_total_invest,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="susId != null" >
+        #{susId,jdbcType=INTEGER},
+      </if>
+      <if test="susUserId != null" >
+        #{susUserId,jdbcType=INTEGER},
+      </if>
+      <if test="susScore != null" >
+        #{susScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalScore != null" >
+        #{susTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalInvest != null" >
+        #{susTotalInvest,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserSlotsVO" >
+    update sys_user_slots
+    <set >
+      <if test="susUserId != null" >
+        sus_user_id = #{susUserId,jdbcType=INTEGER},
+      </if>
+      <if test="susScore != null" >
+        sus_score = #{susScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalScore != null" >
+        sus_total_score = #{susTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalInvest != null" >
+        sus_total_invest = #{susTotalInvest,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sus_id = #{susId,jdbcType=INTEGER}
+  </update>
+   <update id="updateOffsetByUserId" parameterType="com.voyage.data.vo.SysUserSlotsVO" >
+    update sys_user_slots
+    <set >
+      <if test="susScore != null" >
+        sus_score = sus_score+#{susScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalScore != null" >
+        sus_total_score = sus_total_score+#{susTotalScore,jdbcType=INTEGER},
+      </if>
+      <if test="susTotalInvest != null" >
+        sus_total_invest =sus_total_invest+ #{susTotalInvest,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sus_user_id = #{susUserId,jdbcType=INTEGER}
+  </update>
+  <update id="resetAllScore"  >
+    update sys_user_slots    set sus_score=0
+  </update>
+</mapper>

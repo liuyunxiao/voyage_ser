@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgCorpsTypeVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgCorpsTypeVO" >
+    <id column="cct_id" property="cctId" jdbcType="INTEGER" />
+    <result column="cct_name" property="cctName" jdbcType="VARCHAR" />
+    <result column="cct_restrain_more_id" property="cctRestrainMoreId" jdbcType="INTEGER" />
+    <result column="cct_restrain_less_id" property="cctRestrainLessId" jdbcType="INTEGER" />
+    <result column="cct_img" property="cctImg" jdbcType="VARCHAR" />
+    <result column="cct_bullet_img" property="cctBulletImg" jdbcType="VARCHAR" />
+    <result column="cct_end_img" property="cctEndImg" jdbcType="VARCHAR" />
+     <result column="cct_start_img" property="cctStartImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_corps_type
+	</select>
+</mapper>

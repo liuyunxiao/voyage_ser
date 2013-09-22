@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgDailyTaskVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgDailyTaskVO" >
+    <id column="cdt_id" property="cdtId" jdbcType="INTEGER" />
+    <result column="cdt_type" property="cdtType" jdbcType="INTEGER" />
+    <result column="cdt_name" property="cdtName" jdbcType="VARCHAR" />
+    <result column="cdt_desc" property="cdtDesc" jdbcType="VARCHAR" />
+    <result column="cdt_restrain" property="cdtRestrain" jdbcType="INTEGER" />
+    <result column="cdt_live" property="cdtLive" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from cfg_daily_task
+  </select>
+ 
+</mapper>

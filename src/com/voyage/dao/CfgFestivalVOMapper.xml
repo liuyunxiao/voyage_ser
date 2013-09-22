@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgFestivalVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgFestivalVO" >
+    <id column="cf_id" property="cfId" jdbcType="INTEGER" />
+    <result column="cf_start" property="cfStart" jdbcType="TIMESTAMP" />
+    <result column="cf_end" property="cfEnd" jdbcType="TIMESTAMP" />
+    <result column="cf_desc" property="cfDesc" jdbcType="VARCHAR" />
+    <result column="cf_reward_id" property="cfRewardVO.crId" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select * from cfg_festival
+  </select>
+ 
+</mapper>

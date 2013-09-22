@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgActivityMapVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgActivityMapVO" >
+    <id column="cam_id" property="camId" jdbcType="INTEGER" />
+    <result column="cam_level" property="camLevel" jdbcType="INTEGER" />
+    <result column="cam_img" property="camImg" jdbcType="VARCHAR" />
+    <result column="cam_name" property="camName" jdbcType="VARCHAR" />
+    <result column="cam_n" property="camN" jdbcType="INTEGER" />
+    <result column="cam_monster_id" property="camMonsterId" jdbcType="INTEGER" />
+    <result column="cam_reward" property="camReward" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_activity_map order by cam_level
+	</select>
+</mapper>

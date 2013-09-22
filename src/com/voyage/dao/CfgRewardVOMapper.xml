@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgRewardVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgRewardVO" >
+    <id column="cr_id" property="crId" jdbcType="INTEGER" />
+    <result column="cr_gold" property="crGold" jdbcType="INTEGER" />
+    <result column="cr_goods" property="crGoods" jdbcType="VARCHAR" />
+    <result column="cr_corps" property="crCorps" jdbcType="VARCHAR" />
+    <result column="cr_desc" property="crDesc" jdbcType="VARCHAR" />
+     <result column="cr_type" property="crType" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_reward
+	</select>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserExpenseVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserExpenseVO" >
+    <id column="sue_id" property="sueId" jdbcType="INTEGER" />
+    <result column="sue_user_id" property="sueUserId" jdbcType="INTEGER" />
+    <result column="sue_type" property="sueType" jdbcType="INTEGER" />
+    <result column="sue_expense_id" property="sueExpenseId" jdbcType="INTEGER" />
+    <result column="sue_time" property="sueTime" jdbcType="TIMESTAMP" />
+    <result column="sue_cost" property="sueCost" jdbcType="INTEGER" />
+     <result column="sue_desc" property="sueDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sue_id, sue_user_id, sue_type, sue_expense_id, sue_time,sue_cost,sue_desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_expense
+    where sue_id = #{sueId,jdbcType=INTEGER}
+  </select>
+   <select id="selectCountByType" resultType="java.lang.Integer" parameterType="map" >
+   select count(1)
+    from sys_user_expense
+    where  sue_user_id=#{userId} and sue_type=#{sueType}
+  </select>
+     <select id="selectCountByDesc" resultType="java.lang.Integer" parameterType="map" >
+   select count(1)
+    from sys_user_expense
+    where  sue_user_id=#{userId} and sue_desc=#{sueDesc}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_expense
+    where sue_id = #{sueId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserExpenseVO" >
+    insert into sys_user_expense
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sueId != null" >
+        sue_id,
+      </if>
+      <if test="sueUserId != null" >
+        sue_user_id,
+      </if>
+      <if test="sueType != null" >
+        sue_type,
+      </if>
+      <if test="sueExpenseId != null" >
+        sue_expense_id,
+      </if>
+      <if test="sueTime != null" >
+        sue_time,
+      </if>
+      <if test="sueCost != null" >
+        sue_cost,
+      </if>
+       <if test="sueDesc != null" >
+        sue_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sueId != null" >
+        #{sueId,jdbcType=INTEGER},
+      </if>
+      <if test="sueUserId != null" >
+        #{sueUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sueType != null" >
+        #{sueType,jdbcType=INTEGER},
+      </if>
+      <if test="sueExpenseId != null" >
+        #{sueExpenseId,jdbcType=INTEGER},
+      </if>
+      <if test="sueTime != null" >
+        #{sueTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sueCost != null" >
+        #{sueCost},
+      </if>
+       <if test="sueDesc != null" >
+        #{sueDesc},
+      </if>
+    </trim>
+    
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserExpenseVO" >
+    update sys_user_expense
+    <set >
+      <if test="sueUserId != null" >
+        sue_user_id = #{sueUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sueType != null" >
+        sue_type = #{sueType,jdbcType=INTEGER},
+      </if>
+      <if test="sueExpenseId != null" >
+        sue_expense_id = #{sueExpenseId,jdbcType=INTEGER},
+      </if>
+      <if test="sueTime != null" >
+        sue_time = #{sueTime,jdbcType=TIMESTAMP},
+      </if>
+    <if test="sueCost != null" >
+       sue_cost=#{sueCost},
+      </if>
+      <if test="sueDesc != null" >
+       sue_desc=#{sueDesc},
+      </if>
+    </set>
+    where sue_id = #{sueId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

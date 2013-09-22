@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserTaskVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserTaskVO" >
+    <id column="sut_id" property="sutId" jdbcType="INTEGER" />
+    <result column="sut_user_id" property="sutUserId" jdbcType="INTEGER" />
+    <result column="sut_task_id" property="sutTaskId" jdbcType="INTEGER" />
+    <result column="sut_state" property="sutState" jdbcType="INTEGER" />
+    <result column="sut_time" property="sutTime" jdbcType="TIMESTAMP" />
+    <result column="sut_mtime" property="sutMtime" jdbcType="TIMESTAMP" />
+    <result column="sut_type" property="sutType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sut_id, sut_user_id, sut_task_id, sut_state, sut_time, sut_mtime,sut_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where sut_id = #{sutId,jdbcType=INTEGER}
+  </select>
+   <select id="selectNotReceived" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where sut_user_id = #{userId,jdbcType=INTEGER} and sut_state!=#{sutState} order by sut_state desc
+  </select>
+   <select id="selectByStateAndTypes" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where sut_user_id = #{userId,jdbcType=INTEGER} and sut_state=#{sutState}  and sut_type in (${taskTypes})
+  </select>
+  <select id="selectByState" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_task
+    where sut_user_id = #{userId,jdbcType=INTEGER} and sut_state=#{sutState}
+  </select>
+   <select id="selectCountByState" resultType="java.lang.Integer" parameterType="map" >
+    select 
+    count(1)
+    from sys_user_task
+    where sut_user_id = #{userId,jdbcType=INTEGER} and sut_state=#{sutState}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_task
+    where sut_id = #{sutId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserTaskVO" >
+    insert into sys_user_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sutId != null" >
+        sut_id,
+      </if>
+      <if test="sutUserId != null" >
+        sut_user_id,
+      </if>
+      <if test="sutTaskId != null" >
+        sut_task_id,
+      </if>
+      <if test="sutState != null" >
+        sut_state,
+      </if>
+      <if test="sutTime != null" >
+        sut_time,
+      </if>
+      <if test="sutMtime != null" >
+        sut_mtime,
+      </if>
+        <if test="sutType != null" >
+        sut_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sutId != null" >
+        #{sutId,jdbcType=INTEGER},
+      </if>
+      <if test="sutUserId != null" >
+        #{sutUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sutTaskId != null" >
+        #{sutTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="sutState != null" >
+        #{sutState,jdbcType=INTEGER},
+      </if>
+      <if test="sutTime != null" >
+        #{sutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sutMtime != null" >
+        #{sutMtime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="sutType != null" >
+        #{sutType},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserTaskVO" >
+    update sys_user_task
+    <set >
+      <if test="sutUserId != null" >
+        sut_user_id = #{sutUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sutTaskId != null" >
+        sut_task_id = #{sutTaskId,jdbcType=INTEGER},
+      </if>
+      <if test="sutState != null" >
+        sut_state = #{sutState,jdbcType=INTEGER},
+      </if>
+      <if test="sutTime != null" >
+        sut_time = #{sutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sutMtime != null" >
+        sut_mtime = #{sutMtime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="sutType != null" >
+       sut_type= #{sutType},
+      </if>
+    </set>
+    where sut_id = #{sutId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

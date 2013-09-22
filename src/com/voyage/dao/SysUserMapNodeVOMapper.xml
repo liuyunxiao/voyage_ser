@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserMapNodeVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserMapNodeVO" >
+    <id column="sumn_id" property="sumnId" jdbcType="INTEGER" />
+    <result column="sumn_user_id" property="sumnUserId" jdbcType="INTEGER" />
+    <result column="sumn_map_node_type_id" property="sumnMapNodeTypeId" jdbcType="INTEGER" />
+    <result column="sumn_map_node_id" property="sumnMapNodeId" jdbcType="INTEGER" />
+    <result column="sumn_state" property="sumnState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sumn_id, sumn_user_id, sumn_map_node_type_id, sumn_map_node_id, sumn_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_map_node
+    where sumn_id = #{sumnId,jdbcType=INTEGER}
+  </select>
+ 
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_map_node
+    where sumn_user_id = #{userId,jdbcType=INTEGER}  order by sumn_id desc
+  </select>
+   <select id="selectByNodeId" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_map_node
+    where sumn_user_id = #{userId,jdbcType=INTEGER} and sumn_map_node_id=#{nodeId}
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_map_node
+    where sumn_user_id = #{userId,jdbcType=INTEGER} and sumn_map_node_type_id=#{nodeTypeId} order by sumn_id desc
+  </select>
+   <select id="selectCountByType" resultType="java.lang.Integer" parameterType="map" >
+    select 
+    count(1)
+    from sys_user_map_node
+    where sumn_user_id = #{userId,jdbcType=INTEGER} and sumn_map_node_type_id=#{nodeTypeId} and sumn_state=#{sumnState}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_map_node
+    where sumn_id = #{sumnId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserMapNodeVO" >
+    insert into sys_user_map_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sumnId != null" >
+        sumn_id,
+      </if>
+      <if test="sumnUserId != null" >
+        sumn_user_id,
+      </if>
+      <if test="sumnMapNodeTypeId != null" >
+        sumn_map_node_type_id,
+      </if>
+      <if test="sumnMapNodeId != null" >
+        sumn_map_node_id,
+      </if>
+      <if test="sumnState != null" >
+        sumn_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sumnId != null" >
+        #{sumnId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnUserId != null" >
+        #{sumnUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnMapNodeTypeId != null" >
+        #{sumnMapNodeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnMapNodeId != null" >
+        #{sumnMapNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnState != null" >
+        #{sumnState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserMapNodeVO" >
+    update sys_user_map_node
+    <set >
+      <if test="sumnUserId != null" >
+        sumn_user_id = #{sumnUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnMapNodeTypeId != null" >
+        sumn_map_node_type_id = #{sumnMapNodeTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnMapNodeId != null" >
+        sumn_map_node_id = #{sumnMapNodeId,jdbcType=INTEGER},
+      </if>
+      <if test="sumnState != null" >
+        sumn_state = #{sumnState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sumn_id = #{sumnId,jdbcType=INTEGER}
+  </update>
+ <update id="updateState" parameterType="com.voyage.data.vo.SysUserMapNodeVO" >
+    update sys_user_map_node
+     set   sumn_state = #{sumnState,jdbcType=INTEGER}
+    where sumn_user_id = #{userId,jdbcType=INTEGER} and sumn_map_node_id=#{nodeId}
+  </update>
+</mapper>

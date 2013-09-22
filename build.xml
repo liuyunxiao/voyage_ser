@@ -1,0 +1,114 @@
+<project name="spring_project_builder" basedir="." default="target_default">
+	<property name="os" value="unix" /><!-- 操作系统 -->
+	
+	<property name="path_root" value="." /><!-- / -->
+	<property name="path_bin" value="${path_root}/bin" /><!-- /bin -->
+	<property name="path_src" value="${path_root}/src" /><!-- /src -->
+	<property name="path_resources" value="${path_root}/resources" /><!-- /resources -->
+	
+	<property name="path_lib" value="${path_root}/lib" /><!-- /lib -->
+	<property name="path_lib_mina" value="${path_lib}/mina" /><!-- /lib/mina -->
+	
+	<property name="path_release" value="${path_root}/release" /><!-- /release -->
+	<property name="jar_dir" value="lib" /><!-- /release中第三方jar包的目录名 -->
+	<property name="path_release_lib" value="${path_release}/${jar_dir}" /><!-- /release中第三方jar包的目录路径 -->
+	
+	<property name="main_class" value="com.voyage.Bootstrap" /><!-- MANIFEST.MF 启动类 -->
+	<property name="mf_classpath_prefix" value=". ./${jar_dir}/" /><!-- MANIFEST.MF Class-Path 前缀 -->
+	<property name="mf_classpath_jarsep" value=" ./${jar_dir}/" /><!-- MANIFEST.MF Class-Path 每个jar的分隔符 -->
+
+	<target name="target_default">
+		<!-- 清理release -->
+		<delete dir="${path_release}" />
+		<mkdir dir="${path_release}" />
+		<mkdir dir="${path_release_lib}" />
+
+		<!-- 拷贝Eclipse项目文件到/release -->
+		<echo>copy *.properties *.bat *.sh to /release</echo>
+		<copy todir="${path_release}">
+			<!-- Eclipse项目根目录相关文件 -->
+			<fileset dir="${path_root}/">
+				<include name="restart.sh" />
+				<include name="restart_debug.sh" />
+			</fileset>
+			
+			<!-- Eclipse项目/bin目录相关文件 -->
+			<fileset dir="${path_bin}/">
+				<include name="log4j.properties" />
+				<include name="jdbc.properties" />
+				<include name="battle.properties" />
+				<include name="voyage.properties" />
+			</fileset>
+		</copy>
+		
+		<!-- 拷贝“/项目/lib”中的所有jar到“/release/lib” -->
+		<echo>copy *.jar to /release/lib</echo>
+		<copy todir="${path_release_lib}">
+			<fileset dir="${path_lib}">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${path_lib_mina}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- 
+			设置MANIFEST.MF文件的Class-Path属性
+			解决在windows-dos、linux-shell中spring<context:component-scan>无法加载bean的bug
+		-->
+		<path id="mf_classpath">
+			<fileset dir="${path_release}" includes="**/*.jar" />
+		</path>
+		<pathconvert property="mf_classpath_value" pathsep="${mf_classpath_jarsep}" targetos="${os}">
+			<path refid="mf_classpath" />
+			<flattenmapper />
+		</pathconvert>
+		<echo>MANIFEST.MF Class-Path -> ${mf_classpath_prefix}${mf_classpath_value}</echo>
+
+		<!-- eclipse build project -->
+		<!--
+		<javac destdir="${path_bin}" nowarn="true" debug="true">
+			<classpath>
+				<fileset dir="${path_lib}"><include name="*.jar" /></fileset>
+				<fileset dir="${path_lib_mina}"><include name="*.jar" /></fileset>
+			</classpath>
+			<src path="${path_root}/src"/>
+			<exclude name="**/test/*"/>
+			<exclude name="**/tests/*"/>
+			<exclude name="**/*Test*.java"/>
+		</javac>
+		<copy todir="${path_bin}" overwrite="true">
+			<fileset dir="${path_src}"><include name="**/*.xml"/><include name="**/*.properties"/></fileset>
+			<fileset dir="${path_resources}"><include name="**/*.xml"/><include name="**/*.properties"/></fileset>
+		</copy>
+		-->
+		
+		<!-- ./bin -> jar -->
+		<jar destfile="${path_release}/voyage.jar">
+			<manifest>
+				<attribute name="Main-Class" value="${main_class}" />
+				<attribute name="Class-Path" value="${mf_classpath_prefix}${mf_classpath_value}" />
+			</manifest>
+			<fileset dir="${path_bin}">
+				<!-- jar包含以下文件 -->
+				<include name="**/*.class" />
+				<include name="**/*.xml" />
+				<include name="mybatis.properties" />
+				
+				<!-- jar排除以下文件 -->
+				<exclude name="log4j.properties" />
+				<exclude name="jdbc.properties" />
+				<exclude name="battle.properties" />
+				<exclude name="voyage.properties" />
+			</fileset>
+		</jar>
+		
+		<!-- zip & delete -->
+		<!--
+		<zip basedir="${path_release}" destfile="${path_release}/release.zip"></zip>
+		<delete dir="${path_release_lib}">
+	    	<fileset dir="${path_release}" excludes="**/*.zip"/>
+	  	</delete>
+	  	-->
+	</target>
+</project>

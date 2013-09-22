@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgSkillVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgSkillVO" >
+    <id column="cs_id" property="csId" jdbcType="INTEGER" />
+    <result column="cs_name" property="csName" jdbcType="VARCHAR" />
+    <result column="cs_desc" property="csDesc" jdbcType="VARCHAR" />
+    <result column="cs_img" property="csImg" jdbcType="VARCHAR" />
+    <result column="cs_battle_img" property="csBattleImg" jdbcType="VARCHAR" />
+     <result column="cs_battle_bubble" property="csBattleBubble" jdbcType="VARCHAR" />
+     <result column="cs_battle_side" property="csBattleSide" />
+    <result column="cs_rule" property="csRule" jdbcType="VARCHAR" />
+    <result column="cs_buff_rate" property="csBuffRate" jdbcType="INTEGER" />
+    <result column="cs_buff_id" property="csBuffVO.cbId" jdbcType="INTEGER" />
+     <result column="cs_buff_id2" property="csBuffVO2.cbId" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_skill
+	</select>
+</mapper>

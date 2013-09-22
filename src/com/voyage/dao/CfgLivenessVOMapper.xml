@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgLivenessVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgLivenessVO" >
+    <id column="cl_id" property="clId" jdbcType="INTEGER" />
+    <result column="cl_n" property="clN" jdbcType="INTEGER" />
+    <result column="cl_desc" property="clDesc" jdbcType="VARCHAR" />
+    <result column="cl_a" property="clA" jdbcType="INTEGER" />
+    <result column="cl_b" property="clB" jdbcType="INTEGER" />
+  </resultMap>
+    
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from cfg_liveness
+  </select>
+</mapper>

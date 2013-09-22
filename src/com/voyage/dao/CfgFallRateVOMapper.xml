@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgFallRateVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgFallRateVO" >
+    <id column="cfr_id" property="cfrId" jdbcType="INTEGER" />
+    <result column="cfr_type" property="cfrType" jdbcType="INTEGER" />
+    <result column="cfr_grade" property="cfrGrade" jdbcType="INTEGER" />
+    <result column="cfr_left" property="cfrLeft" jdbcType="INTEGER" />
+    <result column="cfr_right" property="cfrRight" jdbcType="INTEGER" />
+    <result column="cfr_rate" property="cfrRate" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_fall_rate
+	</select>
+</mapper>

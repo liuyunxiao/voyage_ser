@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserBackpackVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserBackpackVO" >
+    <id column="sub_id" property="subId" jdbcType="INTEGER" />
+    <result column="sub_user_id" property="subUserId" jdbcType="INTEGER" />
+    <result column="sub_goods_id" property="subGoodsVO.cgId" jdbcType="INTEGER" />
+    <result column="sub_pos" property="subPos" jdbcType="INTEGER" />
+    <result column="sub_time" property="subTime" jdbcType="TIMESTAMP" />
+    <result column="sub_type" property="subType" jdbcType="INTEGER" />
+    <result column="sub_mtime" property="subMtime" jdbcType="TIMESTAMP" />
+    <result column="sub_n" property="subN" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sub_id, sub_user_id, sub_goods_id, sub_pos, sub_time,sub_type,sub_mtime,sub_n
+  </sql>
+    <select id="selectMaxPosByType" parameterType="map" resultType="int">
+  	select  max(sub_pos) from sys_user_backpack where sub_user_id=#{userId} and sub_type =#{subType} 
+  </select>
+   <select id="selectByType" parameterType="map" resultMap="BaseResultMap">
+  	select  * from sys_user_backpack where sub_user_id=#{userId} and sub_type =#{subType} order by sub_pos
+  </select>
+    <select id="selectByUserId" parameterType="int" resultMap="BaseResultMap">
+  	select  * from sys_user_backpack where sub_user_id=#{userId} order by sub_pos
+  </select>
+   <select id="selectByTypeAndPos" parameterType="map" resultMap="BaseResultMap">
+  	select  * from sys_user_backpack where sub_user_id=#{userId} and sub_type =#{subType}  and sub_pos=#{pos}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_backpack
+    where sub_id = #{subId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_backpack
+    where sub_id = #{subId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserBackpackVO" >
+    insert into sys_user_backpack
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subId != null" >
+        sub_id,
+      </if>
+      <if test="subUserId != null" >
+        sub_user_id,
+      </if>
+      <if test="subGoodsVO != null" >
+        sub_goods_id,
+      </if>
+      <if test="subPos != null" >
+        sub_pos,
+      </if>
+      <if test="subTime != null" >
+        sub_time,
+      </if>
+       <if test="subType != null" >
+        sub_type,
+      </if>
+        <if test="subMtime != null" >
+        sub_mtime,
+      </if>
+        <if test="subN != null" >
+        sub_n,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subId != null" >
+        #{subId,jdbcType=INTEGER},
+      </if>
+      <if test="subUserId != null" >
+        #{subUserId,jdbcType=INTEGER},
+      </if>
+      <if test="subGoodsVO != null" >
+        #{subGoodsVO.cgId,jdbcType=INTEGER},
+      </if>
+      <if test="subPos != null" >
+        #{subPos,jdbcType=INTEGER},
+      </if>
+      <if test="subTime != null" >
+        #{subTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="subType != null" >
+       #{subType},
+      </if>
+        <if test="subMtime != null" >
+        #{subMtime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="subN != null" >
+        #{subN},
+      </if>
+    </trim>
+    <selectKey resultType="int" keyProperty="subId">
+        SELECT LAST_INSERT_ID()
+	</selectKey>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserBackpackVO" >
+    update sys_user_backpack
+    <set >
+      <if test="subUserId != null" >
+        sub_user_id = #{subUserId,jdbcType=INTEGER},
+      </if>
+      <if test="subGoodsVO != null" >
+        sub_goods_id = #{subGoodsVO.cgId,jdbcType=INTEGER},
+      </if>
+      <if test="subPos != null" >
+        sub_pos = #{subPos,jdbcType=INTEGER},
+      </if>
+      <if test="subTime != null" >
+        sub_time = #{subTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subType != null" >
+       sub_type=#{subType},
+      </if>
+        <if test="subMtime != null" >
+        sub_mtime=#{subMtime,jdbcType=TIMESTAMP},
+      </if>
+        <if test="subN != null" >
+        sub_n=#{subN},
+      </if>
+    </set>
+    where sub_id = #{subId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

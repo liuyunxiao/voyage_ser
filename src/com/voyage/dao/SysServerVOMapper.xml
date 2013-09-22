@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysServerVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysServerVO" >
+    <id column="ss_id" property="ssId" jdbcType="INTEGER" />
+    <result column="ss_name" property="ssName" jdbcType="VARCHAR" />
+    <result column="ss_state" property="ssState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ss_id, ss_name, ss_state
+  </sql>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from sys_server order by ss_id desc
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_server
+    where ss_id = #{ssId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_server
+    where ss_id = #{ssId,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysServerVO" >
+    insert into sys_server
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ssId != null" >
+        ss_id,
+      </if>
+      <if test="ssName != null" >
+        ss_name,
+      </if>
+      <if test="ssState != null" >
+        ss_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ssId != null" >
+        #{ssId,jdbcType=INTEGER},
+      </if>
+      <if test="ssName != null" >
+        #{ssName,jdbcType=VARCHAR},
+      </if>
+      <if test="ssState != null" >
+        #{ssState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysServerVO" >
+    update sys_server
+    <set >
+      <if test="ssName != null" >
+        ss_name = #{ssName,jdbcType=VARCHAR},
+      </if>
+      <if test="ssState != null" >
+        ss_state = #{ssState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ss_id = #{ssId,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserCorpsVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserCorpsVO" >
+    <id column="suc_id" property="sucId" jdbcType="INTEGER" />
+    <result column="suc_user_id" property="sucUserId" jdbcType="INTEGER" />
+    <result column="suc_corps_id" property="sucCorpsVO.ccId" jdbcType="INTEGER" />
+    <result column="suc_short_atk" property="sucShortAtk" jdbcType="INTEGER" />
+    <result column="suc_short_def" property="sucShortDef" jdbcType="INTEGER" />
+    <result column="suc_magic_atk" property="sucMagicAtk" jdbcType="INTEGER" />
+    <result column="suc_soma" property="sucSoma" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    suc_id, suc_user_id,suc_corps_id,   suc_short_atk, suc_short_def, suc_magic_atk, 
+    suc_soma
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_corps
+    where suc_id = #{sucId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_corps
+    where suc_id = #{sucId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserCorpsVO" >
+    insert into sys_user_corps
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sucId != null" >
+        suc_id,
+      </if>
+       <if test="sucUserId != null" >
+        suc_user_id,
+      </if>
+      <if test="sucCorpsVO != null" >
+        suc_corps_id,
+      </if>
+     
+      
+      <if test="sucShortAtk != null" >
+        suc_short_atk,
+      </if>
+      <if test="sucShortDef != null" >
+        suc_short_def,
+      </if>
+      <if test="sucMagicAtk != null" >
+        suc_magic_atk,
+      </if>
+      <if test="sucSoma != null" >
+        suc_soma,
+      </if>
+      
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sucId != null" >
+        #{sucId,jdbcType=INTEGER},
+      </if>
+      <if test="sucUserId != null" >
+        #{sucUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sucCorpsVO!= null" >
+        #{sucCorpsVO.ccId,jdbcType=INTEGER},
+      </if>
+     
+     
+      <if test="sucShortAtk != null" >
+        #{sucShortAtk,jdbcType=INTEGER},
+      </if>
+      <if test="sucShortDef != null" >
+        #{sucShortDef,jdbcType=INTEGER},
+      </if>
+      <if test="sucMagicAtk != null" >
+        #{sucMagicAtk,jdbcType=INTEGER},
+      </if>
+      <if test="sucSoma != null" >
+        #{sucSoma,jdbcType=INTEGER},
+      </if>
+      
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserCorpsVO" >
+    update sys_user_corps
+    <set >
+    <if test="sucUserId != null" >
+        suc_user_id = #{sucUserId,jdbcType=INTEGER},
+      </if>
+      <if test="sucCorpsVO != null" >
+        suc_corps_id = #{sucCorpsVO.ccId,jdbcType=INTEGER},
+      </if>
+     
+     
+      <if test="sucShortAtk != null" >
+        suc_short_atk = #{sucShortAtk,jdbcType=INTEGER},
+      </if>
+      <if test="sucShortDef != null" >
+        suc_short_def = #{sucShortDef,jdbcType=INTEGER},
+      </if>
+      <if test="sucMagicAtk != null" >
+        suc_magic_atk = #{sucMagicAtk,jdbcType=INTEGER},
+      </if>
+      <if test="sucSoma != null" >
+        suc_soma = #{sucSoma,jdbcType=INTEGER},
+      </if>
+     
+    </set>
+    where suc_id = #{sucId,jdbcType=INTEGER}
+  </update>
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_corps
+    where suc_user_id=#{userId} 
+  </select>
+   <select id="selectByCorpsId" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_corps
+    where suc_user_id=#{userId} and suc_corps_id=#{corpsId}
+  </select>
+</mapper>

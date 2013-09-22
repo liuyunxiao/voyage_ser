@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgPrincessVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgPrincessVO" >
+    <id column="cp_id" property="cpId" jdbcType="INTEGER" />
+    <result column="cp_name" property="cpName" jdbcType="VARCHAR" />
+    <result column="cp_img" property="cpImg" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_princess
+	</select>
+</mapper>

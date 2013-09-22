@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgVipVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgVipVO" >
+    <id column="cv_id" property="cvId" jdbcType="INTEGER" />
+    <result column="cv_per_cost" property="cvPerCost" jdbcType="INTEGER" />
+    <result column="cv_total_cost" property="cvTotalCost" jdbcType="INTEGER" />
+    <result column="cv_protect" property="cvProtect" jdbcType="DOUBLE" />
+    <result column="cv_desc" property="cvDesc" jdbcType="VARCHAR" />
+    <result column="cv_cd_skip" property="cvCdSkip" jdbcType="INTEGER" />
+    <result column="cv_speed_up" property="cvSpeedUp" jdbcType="INTEGER" />
+    <result column="cv_day_subsidy" property="cvDaySubsidy" jdbcType="INTEGER" />
+    <result column="cv_gift_rebate" property="cvGiftRebate" jdbcType="DOUBLE" />
+     <result column="cv_speed_up_level" property="cvSpeedUpLevel" jdbcType="INTEGER" />
+  </resultMap>
+    <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_vip
+	</select>
+</mapper>

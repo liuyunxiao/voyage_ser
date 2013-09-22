@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgSceneVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgSceneVO" >
+    <id column="cs_id" property="csId" jdbcType="INTEGER" />
+    <result column="cs_name" property="csName" jdbcType="VARCHAR" />
+    <result column="cs_img" property="csImg" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_scene
+	</select>
+</mapper>

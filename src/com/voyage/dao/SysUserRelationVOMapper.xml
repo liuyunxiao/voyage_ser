@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.SysUserRelationVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.SysUserRelationVO" >
+    <id column="sur_id" property="surId" jdbcType="INTEGER" />
+    <result column="sur_user_id" property="surUserId" jdbcType="INTEGER" />
+    <result column="sur_oppo_id" property="surOppoId" jdbcType="INTEGER" />
+    <result column="sur_time" property="surTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sur_id,  sur_user_id, sur_oppo_id, sur_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_relation
+    where sur_id = #{surId,jdbcType=INTEGER}
+  </select>
+   <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_relation
+  </select>
+    <select id="selectFriend" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_relation
+    where sur_user_id=#{userId} and sur_oppo_id=#{oppoId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_user_relation
+    where sur_id = #{surId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteFriend" parameterType="map" >
+    delete from sys_user_relation
+    where sur_user_id=#{userId} and sur_oppo_id=#{oppoId}
+  </delete>
+  <insert id="insertSelective" parameterType="com.voyage.data.vo.SysUserRelationVO" >
+    insert into sys_user_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="surId != null" >
+        sur_id,
+      </if>
+      <if test="surUserId != null" >
+        sur_user_id,
+      </if>
+      <if test="surOppoId != null" >
+        sur_oppo_id,
+      </if>
+      <if test="surTime != null" >
+        sur_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="surId != null" >
+        #{surId,jdbcType=INTEGER},
+      </if>
+   
+      <if test="surUserId != null" >
+        #{surUserId,jdbcType=INTEGER},
+      </if>
+      <if test="surOppoId != null" >
+        #{surOppoId,jdbcType=INTEGER},
+      </if>
+      <if test="surTime != null" >
+        #{surTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.voyage.data.vo.SysUserRelationVO" >
+    update sys_user_relation
+    <set >
+    
+      <if test="surUserId != null" >
+        sur_user_id = #{surUserId,jdbcType=INTEGER},
+      </if>
+      <if test="surOppoId != null" >
+        sur_oppo_id = #{surOppoId,jdbcType=INTEGER},
+      </if>
+      <if test="surTime != null" >
+        sur_time = #{surTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sur_id = #{surId,jdbcType=INTEGER}
+  </update>
+</mapper>

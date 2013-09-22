@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgMsgFormatVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgMsgFormatVO" >
+    <id column="cmf_id" property="cmfId" jdbcType="INTEGER" />
+    <result column="cmf_format" property="cmfFormat" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <select id="selectAll" resultMap="BaseResultMap"  >
+  select *  from cfg_msg_format
+  </select>
+  
+</mapper>

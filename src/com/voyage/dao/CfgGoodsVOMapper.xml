@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgGoodsVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgGoodsVO" >
+    <id column="cg_id" property="cgId" jdbcType="INTEGER" />
+    <result column="cg_type" property="cgType" jdbcType="INTEGER" />
+    <result column="cg_name" property="cgName" jdbcType="VARCHAR" />
+    <result column="cg_desc" property="cgDesc" jdbcType="VARCHAR" />
+    <result column="cg_price" property="cgPrice" jdbcType="INTEGER" />
+    <result column="cg_img" property="cgImg" jdbcType="VARCHAR" />
+     <result column="cg_unit" property="cgUnit" jdbcType="INTEGER" />
+      <result column="cg_gain" property="cgGain" jdbcType="INTEGER" />
+       <result column="cg_max" property="cgMax" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_goods
+	</select>
+</mapper>

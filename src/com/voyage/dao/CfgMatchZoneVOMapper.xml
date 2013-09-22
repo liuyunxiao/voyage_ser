@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgMatchZoneVOMapper" >
+  <resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgMatchZoneVO" >
+    <id column="cmz_id" property="cmzId" jdbcType="INTEGER" />
+    <result column="cmz_type" property="cmzType" jdbcType="INTEGER" />
+    <result column="cmz_left" property="cmzLeft" jdbcType="INTEGER" />
+    <result column="cmz_right" property="cmzRight" jdbcType="INTEGER" />
+  </resultMap>
+   <select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_match_zone
+	</select>
+</mapper>

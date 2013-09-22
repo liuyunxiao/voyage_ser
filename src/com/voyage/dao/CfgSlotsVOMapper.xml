@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.voyage.dao.CfgSlotsVOMapper">
+	<resultMap id="BaseResultMap" type="com.voyage.data.vo.CfgSlotsVO">
+		<id column="cs_id" property="csId" jdbcType="INTEGER" />
+		<result column="cs_name" property="csName" jdbcType="VARCHAR" />
+		<result column="cs_luck" property="csLuck" jdbcType="INTEGER" />
+		<result column="cs_weight" property="csWeight" jdbcType="INTEGER" />
+		<result column="cs_times" property="csTimes" jdbcType="DOUBLE" />
+		<result column="cs_equals" property="csEquals" jdbcType="VARCHAR" />
+		<result column="cs_seed" property="csSeed" jdbcType="VARCHAR" />
+		<result column="cs_n" property="csN" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select * from cfg_slots
+	</select>
+</mapper>
